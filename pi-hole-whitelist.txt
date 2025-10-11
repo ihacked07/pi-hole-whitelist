@@ -1,121 +1,244 @@
-# Pi-hole Whitelist Configuration
+# 🇹🇭 Pi-hole Whitelist (Thailand Edition)
 # ------------------------------------
-# This file contains common whitelist domains for popular apps in Thailand.
-# Include this in your Pi-hole configuration or import via web interface.
-# Verified for Facebook, Instagram, WhatsApp, LINE, Shopee, TikTok, and Thai banking apps.
+# Maintainer: fb.com/7MannSo
+# Version: 2025-10
+# Description:
+#   Common whitelist domains for Thai users — designed for Pi-hole use.
+#   Includes popular social, shopping, banking, media, and education domains.
+#   Ideal for home, café, or small business Pi-hole installations.
 # ------------------------------------
 
-# --- Facebook / Instagram / WhatsApp ---
+# ====================================
+# 🟦 SOCIAL MEDIA & COMMUNICATION
+# ====================================
+# Allow major communication & social platforms to function properly.
+
 facebook.com
-fb.com
 fbcdn.com
 fbsbx.com
 facebook.net
-facebook-hardware.com
-facebookbrand.com
-facebookmail.com
-facebookvirtualassistant.com
 instagram.com
 cdninstagram.com
+threads.net
 messenger.com
 meta.com
 whatsapp.com
 whatsapp.net
-tfbnw.net
-fb.watch
-fbpigeon.com
 
-# --- LINE ---
 line.me
 line-apps.com
-line-scdn.net
-line-scdn.com
 linecorp.com
 linecdn.net
-linecdn.com
+line-scdn.net
 linew.me
-liff.line.me
-liff-play.line.me
-liff-api.line.me
-notify-api.line.me
-notify-bot.line.me
-api.line.me
-storage.line-apps.com
-manifest.line-apps.com
-page.line-apps.com
-media.line-apps.com
-dl-stickershop.line.naver.jp
-sticker.line-scdn.net
-dl.line.me
-dl.profile.line-scdn.net
-dl.profile.line-apps.com
-obs-snth.line-apps.com
+linetv.tw
+today.line.me
+shopping.line.me
 
-# --- Shopee ---
+x.com
+twitter.com
+t.co
+twimg.com
+api.twitter.com
+abs.twimg.com
+pbs.twimg.com
+video.twimg.com
+ton.twimg.com
+
+telegram.org
+t.me
+discord.com
+cdn.discordapp.com
+zoom.us
+
+# ====================================
+# 🛍️ SHOPPING & E-COMMERCE
+# ====================================
+# Whitelist for major e-commerce platforms used in Thailand.
+
 shopee.co.th
-cf.shopee.co.th
-deo.shopeemobile.com
-live.shopee.co.th
-mall.shopee.co.th
-chat.shopee.co.th
-api.shopee.co.th
-games.shopee.co.th
-cf.shopee.sg
 shopeemobile.com
+cf.shopee.co.th
+api.shopee.co.th
 
-# --- TikTok ---
-tiktok.com
-tiktokcdn.com
-tiktokv.com
-ttwstatic.com
-muscdn.com
-musical.ly
-tiktokcdn-us.com
-tiktokcdn-eu.com
-tiktokapi.com
-byteoversea.com
-bytedance.com
-ibyteimg.com
-pstatp.com
+lazada.co.th
+my.lazada.co.th
+s.lazada.co.th
+icms.lazada.co.th
+laz-img-cdn.alicdn.com
+alicdn.com
+alibaba.com
+alipay.com
+lazglobal.com
+assets.alicdn.com
+lazada.sg
 
-# --- Financial / Government (Thailand) ---
-# Note: Only whitelist the domains you trust and use.
-# Some banking apps rely on AWS/CloudFront/CDN subdomains.
+jd.co.th
+jdth.com
+jdcdn.com
 
-# Bangkok Bank
+# ====================================
+# 💳 BANKING / CREDIT / FINANCE (TH)
+# ====================================
+# Whitelist for Thai banking, credit cards, and finance apps.
+
 bbl.co.th
 bangkokbank.com
 
-# Krungthai Bank
 ktb.co.th
 krungthai.com
 
-# Siam Commercial Bank
 scb.co.th
 scbapi.scb.co.th
 
-# Kasikorn Bank
 kbank.co.th
 kasikornbank.com
 
-# Government Savings Bank
+krungsri.com
+krungsrionline.com
+krungsricard.com
+mobile.servicekrungsrigroup.com
+www.krungsrimobile.com
+
 gsb.or.th
 
-# PromptPay / Payment systems
-promptpay.io
-npay.or.th
+ttbbank.com
+tmbbank.com
+
 ghb.co.th
 
-# Government Apps (ตัวอย่าง)
-go.th
+promptpay.io
+npay.or.th
 ndid.or.th
-thaigov.go.th
-mof.go.th
+govwallet.go.th
 
-# --- Cloud/CDN Commonly Used by Banks ---
+aeon.co.th
+aeonnetservice.com
+aeonmicrofinance.com
+aeoncredit.co.th
+
+umayplus.co.th
+easybuy.co.th
+umayplus.com
+ebm.co.th
+
+# ====================================
+# 🎓 EDUCATION / UNIVERSITIES (TH)
+# ====================================
+# Common domains for major Thai universities.
+# Helps avoid blocking academic and e-learning services.
+
+chula.ac.th
+cu.ac.th
+mahidol.ac.th
+kku.ac.th
+ku.ac.th
+cmu.ac.th
+psu.ac.th
+bu.ac.th
+su.ac.th
+wu.ac.th
+spu.ac.th
+mut.ac.th
+rmutp.ac.th
+rmuti.ac.th
+rmutk.ac.th
+rmutl.ac.th
+rmutr.ac.th
+rmutto.ac.th
+npru.ac.th
+mfu.ac.th
+kmutt.ac.th
+kmitl.ac.th
+nu.ac.th
+swu.ac.th
+tni.ac.th
+tu.ac.th
+au.edu
+stamford.edu
+buu.ac.th
+utcc.ac.th
+dpu.ac.th
+msu.ac.th
+phuket.psu.ac.th
+ubu.ac.th
+pim.ac.th
+rsu.ac.th
+
+# ====================================
+# 🎬 STREAMING & MEDIA
+# ====================================
+youtube.com
+ytimg.com
+googlevideo.com
+netflix.com
+nflxvideo.net
+nflximg.net
+spotify.com
+scdn.co
+joox.com
+jooxcdn.com
+
+# ====================================
+# 🧭 TRAVEL / MAP / SERVICE
+# ====================================
+grab.com
+grbcdn.net
+food.grab.com
+mapbox.com
+maps.googleapis.com
+googlemaps.com
+booking.com
+agoda.com
+traveloka.com
+airasia.com
+
+# ====================================
+# 💬 CLOUD / CDN / API
+# ====================================
 amazonaws.com
 cloudfront.net
+akamai.net
 akamaized.net
+googleusercontent.com
+firebaseio.com
+fastly.net
+cdn77.org
 
-# --- END OF FILE ---
-# Update periodically and monitor Query Log for new required domains.
+# ====================================
+# 📱 SYSTEM SERVICES (GOOGLE / APPLE / MICROSOFT)
+# ====================================
+google.com
+gstatic.com
+googleapis.com
+ggpht.com
+play.google.com
+android.clients.google.com
+apple.com
+icloud.com
+mzstatic.com
+apps.apple.com
+live.com
+microsoft.com
+office.com
+onenote.com
+teams.microsoft.com
+
+# ====================================
+# 🏛️ GOVERNMENT / UTILITIES (TH)
+# ====================================
+go.th
+thaigov.go.th
+mof.go.th
+egat.co.th
+mea.or.th
+pea.co.th
+
+# ====================================
+# ✅ Notes
+# - Maintained by: 7MannSo (https://github.com/7MannSo)
+# - Check Pi-hole Query Log regularly to fine-tune allowed domains.
+# - Import command:
+#     sudo pihole -w $(cat pi-hole-whitelist-full.txt | grep -v '^#')
+# - Recommended to review every 3 months for CDN/domain updates.
+# ===================================
