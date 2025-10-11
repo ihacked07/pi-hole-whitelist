@@ -1,6 +1,6 @@
 # 🇹🇭 Pi-hole Whitelist (Thailand Edition)
 # ------------------------------------
-# Maintainer: fb.com/7MannSo
+# Maintainer: 7MannSo
 # Version: 2025-10
 # Description:
 #   Common whitelist domains for Thai users — designed for Pi-hole use.
