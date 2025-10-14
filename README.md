@@ -1,7 +1,7 @@
 # 🇹🇭 Pi-hole Whitelist (Thailand Edition)
 # ------------------------------------
 # Maintainer: 7MannSo
-# Version: 2025-10
+# Version: 2025-10-v3
 # Description:
 #   Common whitelist domains for Thai users — designed for Pi-hole use.
 #   Includes popular social, shopping, banking, media, and education domains.
@@ -34,6 +34,7 @@ linew.me
 linetv.tw
 today.line.me
 shopping.line.me
+uts-front.line-apps.com
 
 x.com
 twitter.com
@@ -56,11 +57,14 @@ zoom.us
 # ====================================
 # Whitelist for major e-commerce platforms used in Thailand.
 
+# --- Shopee / LINE Shopping ---
 shopee.co.th
 shopeemobile.com
 cf.shopee.co.th
 api.shopee.co.th
+uts-front.line-apps.com
 
+# --- Lazada ---
 lazada.co.th
 my.lazada.co.th
 s.lazada.co.th
@@ -73,6 +77,7 @@ lazglobal.com
 assets.alicdn.com
 lazada.sg
 
+# --- JD Central ---
 jd.co.th
 jdth.com
 jdcdn.com
@@ -241,4 +246,4 @@ pea.co.th
 # - Import command:
 #     sudo pihole -w $(cat pi-hole-whitelist-full.txt | grep -v '^#')
 # - Recommended to review every 3 months for CDN/domain updates.
-# ===================================
+# ====================================
