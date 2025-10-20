@@ -1,0 +1,121 @@
+# Pi-hole Whitelist Configuration
+# ------------------------------------
+# This file contains common whitelist domains for popular apps in Thailand.
+# Include this in your Pi-hole configuration or import via web interface.
+# Verified for Facebook, Instagram, WhatsApp, LINE, Shopee, TikTok, and Thai banking apps.
+# ------------------------------------
+
+# --- Facebook / Instagram / WhatsApp ---
+facebook.com
+fb.com
+fbcdn.com
+fbsbx.com
+facebook.net
+facebook-hardware.com
+facebookbrand.com
+facebookmail.com
+facebookvirtualassistant.com
+instagram.com
+cdninstagram.com
+messenger.com
+meta.com
+whatsapp.com
+whatsapp.net
+tfbnw.net
+fb.watch
+fbpigeon.com
+
+# --- LINE ---
+line.me
+line-apps.com
+line-scdn.net
+line-scdn.com
+linecorp.com
+linecdn.net
+linecdn.com
+linew.me
+liff.line.me
+liff-play.line.me
+liff-api.line.me
+notify-api.line.me
+notify-bot.line.me
+api.line.me
+storage.line-apps.com
+manifest.line-apps.com
+page.line-apps.com
+media.line-apps.com
+dl-stickershop.line.naver.jp
+sticker.line-scdn.net
+dl.line.me
+dl.profile.line-scdn.net
+dl.profile.line-apps.com
+obs-snth.line-apps.com
+
+# --- Shopee ---
+shopee.co.th
+cf.shopee.co.th
+deo.shopeemobile.com
+live.shopee.co.th
+mall.shopee.co.th
+chat.shopee.co.th
+api.shopee.co.th
+games.shopee.co.th
+cf.shopee.sg
+shopeemobile.com
+
+# --- TikTok ---
+tiktok.com
+tiktokcdn.com
+tiktokv.com
+ttwstatic.com
+muscdn.com
+musical.ly
+tiktokcdn-us.com
+tiktokcdn-eu.com
+tiktokapi.com
+byteoversea.com
+bytedance.com
+ibyteimg.com
+pstatp.com
+
+# --- Financial / Government (Thailand) ---
+# Note: Only whitelist the domains you trust and use.
+# Some banking apps rely on AWS/CloudFront/CDN subdomains.
+
+# Bangkok Bank
+bbl.co.th
+bangkokbank.com
+
+# Krungthai Bank
+ktb.co.th
+krungthai.com
+
+# Siam Commercial Bank
+scb.co.th
+scbapi.scb.co.th
+
+# Kasikorn Bank
+kbank.co.th
+kasikornbank.com
+
+# Government Savings Bank
+gsb.or.th
+
+# PromptPay / Payment systems
+promptpay.io
+npay.or.th
+ghb.co.th
+
+# Government Apps (ตัวอย่าง)
+go.th
+ndid.or.th
+thaigov.go.th
+mof.go.th
+
+# --- Cloud/CDN Commonly Used by Banks ---
+amazonaws.com
+cloudfront.net
+akamaized.net
+
+# --- END OF FILE ---
+# Update periodically and monitor Query Log for new required domains.
