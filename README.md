@@ -1,5 +1,5 @@
 # 🇹🇭 Pi-hole Whitelist (Thailand Edition)
-**Maintained by [7MannSo](https://github.com/ihacked07)**  
+**Maintained by [ihacked07](https://github.com/ihacked07)**  
 > Latest version: `pi-hole-whitelist-latest.txt`
 
 ---
