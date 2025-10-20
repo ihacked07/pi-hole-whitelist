@@ -1,249 +1,64 @@
 # 🇹🇭 Pi-hole Whitelist (Thailand Edition)
-# ------------------------------------
-# Maintainer: 7MannSo
-# Version: 2025-10-v3
-# Description:
-#   Common whitelist domains for Thai users — designed for Pi-hole use.
-#   Includes popular social, shopping, banking, media, and education domains.
-#   Ideal for home, café, or small business Pi-hole installations.
-# ------------------------------------
+**Maintained by [7MannSo](https://github.com/ihacked07)**  
+> Latest version: `pi-hole-whitelist-latest.txt`
 
-# ====================================
-# 🟦 SOCIAL MEDIA & COMMUNICATION
-# ====================================
-# Allow major communication & social platforms to function properly.
+---
 
-facebook.com
-fbcdn.com
-fbsbx.com
-facebook.net
-instagram.com
-cdninstagram.com
-threads.net
-messenger.com
-meta.com
-whatsapp.com
-whatsapp.net
+## 🧩 Overview
+This whitelist is designed for **Thai Pi-hole users** who want popular apps and services to work without being blocked.  
+It includes trusted domains for:
+- 🟦 Social Media (Facebook, LINE, IG, X, TikTok)
+- 🛍️ Shopping (Shopee, Lazada, JD Central)
+- 💳 Thai Banking & Finance (SCB, KBank, Krungsri, AEON, Umay+)
+- 🎓 Education (Thai universities)
+- 🎬 Streaming (YouTube, Netflix, Spotify)
+- ☁️ Cloud/CDN/Push services (AWS, FCM, APNs)
+- 🏛️ Government & Utilities (EGAT, PEA, MEA, go.th)
 
-line.me
-line-apps.com
-linecorp.com
-linecdn.net
-line-scdn.net
-linew.me
-linetv.tw
-today.line.me
-shopping.line.me
-uts-front.line-apps.com
+---
 
-x.com
-twitter.com
-t.co
-twimg.com
-api.twitter.com
-abs.twimg.com
-pbs.twimg.com
-video.twimg.com
-ton.twimg.com
+## ⚙️ Installation (Pi-hole)
+### Option 1 — Import via command
+1. Download the latest whitelist:
+   ```bash
+   wget https://raw.githubusercontent.com/<your-username>/pi-hole-whitelist/main/pi-hole-whitelist-latest.txt
+Add all domains to whitelist:
 
-telegram.org
-t.me
-discord.com
-cdn.discordapp.com
-zoom.us
+bash
+Copy code
+sudo pihole -w $(cat pi-hole-whitelist-latest.txt | grep -v '^#')
+Restart Pi-hole DNS service:
 
-# ====================================
-# 🛍️ SHOPPING & E-COMMERCE
-# ====================================
-# Whitelist for major e-commerce platforms used in Thailand.
+bash
+Copy code
+pihole restartdns
+Option 2 — Manual import via web admin
+Open: http://<your-pihole-ip>/admin
 
-# --- Shopee / LINE Shopping ---
-shopee.co.th
-shopeemobile.com
-cf.shopee.co.th
-api.shopee.co.th
-uts-front.line-apps.com
+Go to Group Management → Adlists / Whitelist
 
-# --- Lazada ---
-lazada.co.th
-my.lazada.co.th
-s.lazada.co.th
-icms.lazada.co.th
-laz-img-cdn.alicdn.com
-alicdn.com
-alibaba.com
-alipay.com
-lazglobal.com
-assets.alicdn.com
-lazada.sg
+Paste or upload the file pi-hole-whitelist-latest.txt
 
-# --- JD Central ---
-jd.co.th
-jdth.com
-jdcdn.com
+🔄 Auto-Update (optional)
+You can set Pi-hole to auto-update this whitelist weekly:
 
-# ====================================
-# 💳 BANKING / CREDIT / FINANCE (TH)
-# ====================================
-# Whitelist for Thai banking, credit cards, and finance apps.
+bash
+Copy code
+sudo crontab -e
+Add this line:
 
-bbl.co.th
-bangkokbank.com
+bash
+Copy code
+0 3 * * 1 wget -q -O /etc/pihole/whitelist.txt https://raw.githubusercontent.com/<your-username>/pi-hole-whitelist/main/pi-hole-whitelist-latest.txt && \
+sudo pihole -w $(cat /etc/pihole/whitelist.txt | grep -v '^#') && \
+pihole restartdns
+🧠 Notes
+✅ Recommended for home / café / small business Pi-hole setups in Thailand
 
-ktb.co.th
-krungthai.com
+⚠️ Always review domains before use — only whitelist trusted sources
 
-scb.co.th
-scbapi.scb.co.th
+🕒 Update every 2–3 months for best compatibility
 
-kbank.co.th
-kasikornbank.com
-
-krungsri.com
-krungsrionline.com
-krungsricard.com
-mobile.servicekrungsrigroup.com
-www.krungsrimobile.com
-
-gsb.or.th
-
-ttbbank.com
-tmbbank.com
-
-ghb.co.th
-
-promptpay.io
-npay.or.th
-ndid.or.th
-govwallet.go.th
-
-aeon.co.th
-aeonnetservice.com
-aeonmicrofinance.com
-aeoncredit.co.th
-
-umayplus.co.th
-easybuy.co.th
-umayplus.com
-ebm.co.th
-
-# ====================================
-# 🎓 EDUCATION / UNIVERSITIES (TH)
-# ====================================
-# Common domains for major Thai universities.
-# Helps avoid blocking academic and e-learning services.
-
-chula.ac.th
-cu.ac.th
-mahidol.ac.th
-kku.ac.th
-ku.ac.th
-cmu.ac.th
-psu.ac.th
-bu.ac.th
-su.ac.th
-wu.ac.th
-spu.ac.th
-mut.ac.th
-rmutp.ac.th
-rmuti.ac.th
-rmutk.ac.th
-rmutl.ac.th
-rmutr.ac.th
-rmutto.ac.th
-npru.ac.th
-mfu.ac.th
-kmutt.ac.th
-kmitl.ac.th
-nu.ac.th
-swu.ac.th
-tni.ac.th
-tu.ac.th
-au.edu
-stamford.edu
-buu.ac.th
-utcc.ac.th
-dpu.ac.th
-msu.ac.th
-phuket.psu.ac.th
-ubu.ac.th
-pim.ac.th
-rsu.ac.th
-
-# ====================================
-# 🎬 STREAMING & MEDIA
-# ====================================
-youtube.com
-ytimg.com
-googlevideo.com
-netflix.com
-nflxvideo.net
-nflximg.net
-spotify.com
-scdn.co
-joox.com
-jooxcdn.com
-
-# ====================================
-# 🧭 TRAVEL / MAP / SERVICE
-# ====================================
-grab.com
-grbcdn.net
-food.grab.com
-mapbox.com
-maps.googleapis.com
-googlemaps.com
-booking.com
-agoda.com
-traveloka.com
-airasia.com
-
-# ====================================
-# 💬 CLOUD / CDN / API
-# ====================================
-amazonaws.com
-cloudfront.net
-akamai.net
-akamaized.net
-googleusercontent.com
-firebaseio.com
-fastly.net
-cdn77.org
-
-# ====================================
-# 📱 SYSTEM SERVICES (GOOGLE / APPLE / MICROSOFT)
-# ====================================
-google.com
-gstatic.com
-googleapis.com
-ggpht.com
-play.google.com
-android.clients.google.com
-apple.com
-icloud.com
-mzstatic.com
-apps.apple.com
-live.com
-microsoft.com
-office.com
-onenote.com
-teams.microsoft.com
-
-# ====================================
-# 🏛️ GOVERNMENT / UTILITIES (TH)
-# ====================================
-go.th
-thaigov.go.th
-mof.go.th
-egat.co.th
-mea.or.th
-pea.co.th
-
-# ====================================
-# ✅ Notes
-# - Maintained by: 7MannSo (https://github.com/7MannSo)
-# - Check Pi-hole Query Log regularly to fine-tune allowed domains.
-# - Import command:
-#     sudo pihole -w $(cat pi-hole-whitelist-full.txt | grep -v '^#')
-# - Recommended to review every 3 months for CDN/domain updates.
-# ====================================
+🏷️ Credits
+Maintained by ihacked07
+Contributors welcome — open a PR or issue if you want to suggest new domains.
