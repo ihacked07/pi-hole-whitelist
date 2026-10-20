@@ -1,64 +1,120 @@
-# 🇹🇭 Pi-hole Whitelist (Thailand Edition)
-**Maintained by [ihacked07](https://github.com/ihacked07)**  
-> Latest version: `pi-hole-whitelist-latest.txt`
+# Pi-hole Whitelist Thailand — ใช้ DNS อย่างปลอดภัย ลดความเสี่ยงจากเว็บสแกม
+
+> **สำหรับคนไทยที่ต้องการเพิ่มชั้นป้องกันให้เครือข่ายที่บ้าน ร้านค้า หรือสำนักงานขนาดเล็ก**
+>
+> **สำคัญ:** Repository นี้เก็บ **Allowlist (รายชื่อโดเมนที่อนุญาต)** ไม่ใช่ฐานข้อมูลเว็บหลอกลวงหรือ Blocklist การเพิ่มทั้งรายการลง Allowlist โดยไม่ตรวจสอบ **อาจเปิดทางให้โดเมนที่ควรถูกบล็อกกลับใช้งานได้** อย่าใช้ไฟล์นี้เป็นเครื่องมือป้องกันสแกมเมอร์เพียงอย่างเดียว
+
+[![Pi-hole](https://img.shields.io/badge/Pi--hole-DNS%20filtering-B82127)](https://pi-hole.net/) ![Language](https://img.shields.io/badge/ภาษา-ไทย-blue) ![Type](https://img.shields.io/badge/List-Allowlist%20%7C%20Review%20first-orange)
+
+## ทำไมจึงมีโครงการนี้?
+
+คนไทยพบการหลอกลวงผ่าน SMS, LINE, Facebook, เว็บไซต์ปลอมเลียนแบบธนาคาร, หน้าเข้าสู่ระบบหลอกเก็บรหัสผ่าน และลิงก์ชักชวนติดตั้งแอปอันตราย การกรองโดเมนด้วย **Pi-hole + รายการบล็อกที่เชื่อถือได้** สามารถช่วยลดโอกาสที่อุปกรณ์ในบ้านจะเชื่อมต่อโดเมนอันตราย *ที่รู้จักแล้ว* ได้
+
+อย่างไรก็ตาม โดเมนของบริการที่ใช้งานจริง เช่น LINE, ธนาคาร, ระบบแจ้งเตือน และ CAPTCHA อาจถูกบล็อกผิดพลาด โครงการนี้จึงรวบรวม **รายการโดเมนสำหรับพิจารณาปลดบล็อกเป็นรายกรณี** ไม่ใช่รายการที่รับรองว่า “ปลอดภัยเสมอ”
+
+**หลักการ: บล็อกภัยก่อน → ตรวจสอบการใช้งาน → อนุญาตเฉพาะโดเมนที่จำเป็น**
+
+## Pi-hole ป้องกันอะไรได้ และไม่ได้?
+
+| สถานการณ์ | Pi-hole ช่วยได้แค่ไหน |
+| --- | --- |
+| อุปกรณ์ร้องขอชื่อโดเมนฟิชชิง/มัลแวร์ที่อยู่ใน Blocklist | อาจหยุดการเชื่อมต่อที่ระดับ DNS |
+| เว็บไซต์จริงถูกบล็อกผิดเพราะรายการกรอง | ใช้ Allowlist เฉพาะโดเมนที่ตรวจสอบแล้วเพื่อแก้ไข |
+| โจรใช้หน้าเว็บบนโดเมนที่ยังไม่มีใน Blocklist | อาจไม่ถูกบล็อก |
+| ลิงก์หลอกอยู่บนโดเมนบริการจริง หรือหลอกผ่านข้อความ/โทรศัพท์ | DNS ไม่สามารถวิเคราะห์เจตนาหรือเนื้อหาทุกหน้าได้ |
+| แอปใช้ DNS-over-HTTPS, VPN, DNS ส่วนตัว หรือ IP ตรง | อาจข้ามการกรองของ Pi-hole |
+| การขโมย OTP, หลอกโอนเงิน, ควบคุมเครื่องจากระยะไกล | Pi-hole ป้องกันไม่ได้โดยลำพัง |
+
+**ไม่มี DNS filter ใดรับประกันป้องกันสแกมได้ 100%** ควรใช้ร่วมกับการอัปเดตระบบ, Safe Browsing/การป้องกันฟิชชิงในเบราว์เซอร์, MFA, การตรวจสอบชื่อเว็บไซต์ และการไม่ให้ OTP แก่ผู้อื่น
+
+## เริ่มต้นสร้างเกราะ DNS ให้บ้านคนไทย
+
+### 1. ติดตั้ง Pi-hole และตั้ง DNS ของอุปกรณ์ให้ชี้มาที่ Pi-hole
+
+ติดตั้งจากคู่มือทางการ: [Pi-hole Documentation](https://docs.pi-hole.net/) แล้วตั้ง DNS ที่ DHCP ของเราเตอร์ หรือกำหนด DNS ให้แต่ละเครื่องชี้ไปยัง IP ภายในของ Pi-hole
+
+ทดสอบจากอุปกรณ์ลูกข่ายว่ามีคำขอ DNS ปรากฏใน **Query Log** อย่าคิดว่าติดตั้งแล้วทุกอุปกรณ์จะถูกป้องกันโดยอัตโนมัติ
+
+### 2. เพิ่มรายการบล็อกภัยที่เชื่อถือได้ (Blocklist)
+
+ในหน้า Admin ของ Pi-hole เปิดส่วน **Lists / Adlists** (ชื่อเมนูอาจต่างกันตามเวอร์ชัน) แล้วเพิ่ม **URL ของรายการบล็อกฟิชชิง/มัลแวร์** จากผู้ดูแลที่ระบุแหล่งข้อมูล วิธีอัปเดต และนโยบายแก้ False Positive อย่างชัดเจน
+
+จากนั้นอัปเดตฐานรายการ:
+
+```bash
+sudo pihole -g
+```
+
+**ข้อควรระวัง:** ไฟล์ `pi-hole-whitelist-lastest.txt` ใน Repository นี้ **ห้ามนำไปใส่เป็น Blocklist** เพราะมีวัตถุประสงค์ตรงกันข้าม และโครงการนี้ยัง **ไม่ได้แจก Threat Feed ของเว็บสแกม** โปรดประเมินคุณภาพและความเสี่ยงของ Blocklist ภายนอกด้วยตนเอง
+
+### 3. ตรวจสอบบริการไทยที่ใช้งานไม่ได้ แล้วค่อย Allowlist
+
+เมื่อแอปธนาคาร, LINE, การแจ้งเตือน หรือระบบเรียนออนไลน์มีปัญหา:
+
+1. ดู **Query Log** ว่าโดเมนใดถูกบล็อกจริง และอุปกรณ์ใดเป็นผู้ร้องขอ
+2. ตรวจสอบโดเมนจากเอกสารหรือช่องทางทางการของผู้ให้บริการ อย่าเชื่อเพียงชื่อที่ดูคล้ายธนาคารหรือรัฐบาล
+3. เพิ่ม **เฉพาะชื่อโดเมนที่จำเป็น** ในส่วน **Domains → Allowlist** หรือผ่าน CLI ของ Pi-hole รุ่นปัจจุบัน:
+
+```bash
+sudo pihole allow example.com
+```
+
+`example.com` เป็น **ตัวอย่างเท่านั้น** ให้แทนด้วยโดเมนจริงที่ตรวจสอบแล้ว สามารถยกเลิกได้ด้วย `sudo pihole allow remove example.com`
+
+เอกสารคำสั่งทางการ: [Allowlist / Denylist](https://docs.pi-hole.net/guides/misc/allowlist-denylist/)
+
+## รายการโดเมนใน Repository
+
+| ไฟล์ | การใช้งาน |
+| --- | --- |
+| [`pi-hole-whitelist-lastest.txt`](pi-hole-whitelist-lastest.txt) | ชื่อไฟล์เดิมของรายการ Allowlist ฉบับที่เก็บในโครงการ (สะกด `lastest` ตามไฟล์จริง) |
+| [`pi-hole-whitelist-full-v4.txt`](pi-hole-whitelist-full-v4.txt) | รายการเวอร์ชัน v4 |
+| [`pi-hole-whitelist-v3.txt`](pi-hole-whitelist-v3.txt) | รายการเก่า สำหรับอ้างอิง/เปรียบเทียบ |
+| [`pi-hole-whitelist v2.txt`](pi-hole-whitelist%20v2.txt) | รายการเก่า v2 |
+
+รายการครอบคลุมโดเมนในหมวดสื่อสาร, e-commerce, การเงิน, การศึกษา, สตรีมมิง, CDN, ระบบ Push และบริการทั่วไป **สถานะที่อยู่ในไฟล์ไม่ได้แปลว่ามีการยืนยันความเป็นเจ้าของหรือความปลอดภัยล่าสุดของทุกโดเมน**
+
+### วิธีดาวน์โหลดเพื่อ *ตรวจสอบ* ก่อน ไม่ใช่อนุญาตทั้งหมดทันที
+
+```bash
+curl -fL --output thai-allowlist-review.txt \
+  https://raw.githubusercontent.com/ihacked07/pi-hole-whitelist/main/pi-hole-whitelist-lastest.txt
+
+# ดูรายการที่ไม่ใช่คอมเมนต์ แล้วตรวจสอบทีละโดเมน
+awk 'NF && $1 !~ /^#/ { print $1 }' thai-allowlist-review.txt | sort -u
+```
+
+**ไม่แนะนำ** ให้ใช้ `pihole allow $(cat file)` หรือ Cron job ที่นำทุกโดเมนเข้ารายการอนุญาตโดยอัตโนมัติ เพราะการเปลี่ยนแปลงของรายการอาจลดประสิทธิภาพการบล็อกฟิชชิงได้ โดยเฉพาะโดเมนกว้างหรือบริการ CDN ที่มีผู้ใช้หลายราย
+
+หากต้องแยกนโยบายให้เครื่องผู้ใหญ่/เด็ก/เครื่องชำระเงิน ใช้ [Pi-hole Group Management](https://docs.pi-hole.net/group_management/groups/) และกำหนด Allowlist เฉพาะกลุ่ม
+
+## แนวทางป้องกันสแกมเมอร์ที่ใช้งานได้จริง
+
+- **ที่บ้าน:** ให้เราเตอร์แจก DNS ของ Pi-hole ผ่าน DHCP ตรวจสอบ DNS ส่วนตัว/VPN ของโทรศัพท์ที่อาจทำให้กรองไม่ครอบคลุม
+- **ร้านค้า:** แยกเครือข่ายเครื่องคิดเงินและอุปกรณ์ลูกค้า จำกัดสิทธิ์เข้าหน้า Admin และไม่เปิด DNS resolver ให้คนภายนอกใช้งาน
+- **ครอบครัว:** ย้ำว่าเจ้าหน้าที่ธนาคารไม่ขอ OTP/รหัสผ่านผ่านแชตหรือโทรศัพท์ และอย่าติดตั้ง APK จากลิงก์ที่คนแปลกหน้าส่งมา
+- **เมื่อเว็บถูกบล็อก:** อย่าปิดการกรองทั้งระบบทันที ตรวจ Query Log ก่อนเสมอ
+- **เมื่อสงสัยลิงก์:** เปิดแอปทางการด้วยตนเองหรือพิมพ์ที่อยู่เว็บไซต์ที่ทราบแน่ชัด แทนการกดลิงก์ในข้อความเร่งรัด
+
+### หากถูกหลอกโอนเงินแล้ว
+
+รีบติดต่อธนาคารที่ใช้โอนเงินและโทร **AOC 1441** เพื่อรับความช่วยเหลือตามขั้นตอนทางการ เก็บหลักฐานสลิป/บทสนทนา และปฏิบัติตามคำแนะนำของหน่วยงานรับแจ้งเหตุ
+
+อ้างอิง: [กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม — AOC 1441](https://mdes.go.th/mission/153/) (ศูนย์ AOC ไม่ติดต่อผ่านบัญชีโซเชียลมีเดียเพื่อรับแจ้งเหตุ)
+
+## การร่วมพัฒนาอย่างรับผิดชอบ
+
+เปิด [Issue](https://github.com/ihacked07/pi-hole-whitelist/issues) หรือ Pull Request เพื่อเสนอแก้รายการได้ โดยแจ้ง **โดเมนที่ต้องการเพิ่ม/ลบ, เหตุผล, แหล่งยืนยันทางการ, ผลกระทบเมื่อถูกบล็อก และขั้นตอนตรวจสอบซ้ำ** ห้ามส่งข้อมูลส่วนบุคคล เช่น หมายเลขบัญชี, OTP หรือ Query Log ที่มีข้อมูลอ่อนไหว
+
+**แนวทางดูแลรายการ:** หลีกเลี่ยงการ Allowlist โดเมนกว้างโดยไม่จำเป็น; ตรวจทานโดเมนเก่าที่อาจเปลี่ยนเจ้าของ, โดเมน CDN และผลการทดสอบก่อนเปลี่ยนไฟล์จริง
+
+## สถานะและข้อจำกัด
+
+- โครงการนี้เป็น **ชุดรายการอนุญาตสำหรับปรับความเข้ากันได้ของบริการ** ไม่ใช่ผลิตภัณฑ์ Anti-Scam ที่ผ่านการรับรอง
+- README นี้อธิบายการใช้งานอย่างปลอดภัย **ไม่ได้ยืนยันความถูกต้อง/ความปลอดภัยของทุกโดเมนในไฟล์ที่มีอยู่**
+- รายการ Allowlist อาจมีโดเมนล้าสมัยหรือโดเมนที่ต้องตรวจสอบอีกครั้ง จึง **ไม่แนะนำให้นำเข้าทั้งไฟล์**
+- การบล็อก DNS ช่วยลดความเสี่ยงบางประเภท แต่ไม่ทดแทนการระวังการหลอกลวงและมาตรการความปลอดภัยในอุปกรณ์
 
 ---
 
-## 🧩 Overview
-This whitelist is designed for **Thai Pi-hole users** who want popular apps and services to work without being blocked.  
-It includes trusted domains for:
-- 🟦 Social Media (Facebook, LINE, IG, X, TikTok)
-- 🛍️ Shopping (Shopee, Lazada, JD Central)
-- 💳 Thai Banking & Finance (SCB, KBank, Krungsri, AEON, Umay+)
-- 🎓 Education (Thai universities)
-- 🎬 Streaming (YouTube, Netflix, Spotify)
-- ☁️ Cloud/CDN/Push services (AWS, FCM, APNs)
-- 🏛️ Government & Utilities (EGAT, PEA, MEA, go.th)
-
----
-
-## ⚙️ Installation (Pi-hole)
-### Option 1 — Import via command
-1. Download the latest whitelist:
-   ```bash
-   wget https://raw.githubusercontent.com/<your-username>/pi-hole-whitelist/main/pi-hole-whitelist-latest.txt
-Add all domains to whitelist:
-
-bash
-Copy code
-sudo pihole -w $(cat pi-hole-whitelist-latest.txt | grep -v '^#')
-Restart Pi-hole DNS service:
-
-bash
-Copy code
-pihole restartdns
-Option 2 — Manual import via web admin
-Open: http://<your-pihole-ip>/admin
-
-Go to Group Management → Adlists / Whitelist
-
-Paste or upload the file pi-hole-whitelist-latest.txt
-
-🔄 Auto-Update (optional)
-You can set Pi-hole to auto-update this whitelist weekly:
-
-bash
-Copy code
-sudo crontab -e
-Add this line:
-
-bash
-Copy code
-0 3 * * 1 wget -q -O /etc/pihole/whitelist.txt https://raw.githubusercontent.com/<your-username>/pi-hole-whitelist/main/pi-hole-whitelist-latest.txt && \
-sudo pihole -w $(cat /etc/pihole/whitelist.txt | grep -v '^#') && \
-pihole restartdns
-🧠 Notes
-✅ Recommended for home / café / small business Pi-hole setups in Thailand
-
-⚠️ Always review domains before use — only whitelist trusted sources
-
-🕒 Update every 2–3 months for best compatibility
-
-🏷️ Credits
-Maintained by ihacked07
-Contributors welcome — open a PR or issue if you want to suggest new domains.
+ดูแลโดย [ihacked07](https://github.com/ihacked07) — เพื่อสนับสนุนการใช้อินเทอร์เน็ตอย่างปลอดภัยขึ้นในประเทศไทย
